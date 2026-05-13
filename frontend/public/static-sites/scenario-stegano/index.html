@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ヤマト運輸 - 配送伝票</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+            
+            .terminal-font {
+                font-family: 'Fira Code', monospace;
+            }
+
+            .scanline {
+                width: 100%;
+                height: 100px;
+                z-index: 10;
+                background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 0, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+                opacity: 0.1;
+                position: absolute;
+                bottom: 100%;
+                animation: scanline 6s linear infinite;
+            }
+
+            @keyframes scanline {
+                0% { bottom: 100%; }
+                100% { bottom: -100px; }
+            }
+
+            .pixel-bg {
+                background-image: radial-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 0);
+                background-size: 20px 20px;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4 pixel-bg relative overflow-hidden">
+        <div class="scanline"></div>
+
+        <!-- main content : image viewer -->
+        <div id="viewer" class="max-w-xl w-full bg-white text-gray-800 rounded-xl shadow-2xl overflow-hidden transition-all duration-700">
+            <header class="bg-gray-100 p-4 border-b flex justify-between items-center">
+                <h1 class="text-sm font-bold text-gray-500 uppercase tracking-widest">Photo Viewer v2.4</h1>
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                </div>
+            </header>
+
+            <div class="p-6 flex flex-col items-center">
+                <h1 class="text-lg font-bold text-gray-800 mb-2">ヤマト運輸 オンライン受取確認</h1>
+                <p class="mb-4 text-sm text-gray-600 font-medium">
+                    書類名: <span class="font-mono text-blue-600 italic">digital_receipt_0901.pdf.jpg</span>
+                </p>
+                
+                <!-- dummy image viewer with click interaction -->
+                <div class="relative group cursor-pointer" onclick="startExploit()">
+                    <div class="w-full aspect-video bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-300 group-hover:border-blue-400 transition-colors">
+                        <svg class="w-16 h-16 text-gray-400 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <p class="absolute bottom-4 text-xs font-bold text-gray-400">クリックしてフルサイズを表示</p>
+                    </div>
+                </div>
+
+                <button onclick="startExploit()" class="mt-6 px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 transition-transform active:scale-95 shadow-lg">
+                    ダウンロード (4.2MB)
+                </button>
+            </div>
+        </div>
+
+        <!-- terminal overlay ( initially hidden ) -->
+        <div id="terminal" class="hidden fixed inset-0 z-50 bg-black/90 p-8 terminal-font text-green-500 overflow-y-auto">
+            <div id="terminal-content" class="max-w-3xl mx-auto space-y-1 text-sm md:text-base">
+                <!-- logs will be appended here by JavaScript -->
+            </div>
+        </div>
+
+        <script>
+            const logs = [
+                { text: "> 接続を確立中...", delay: 500 },
+                { text: "> [WARNING] 画像ヘッダーの異常を検知：隠しデータ領域を特定", delay: 800 },
+                { text: "> ステガノグラフィ解析を開始...", delay: 1000 },
+                { text: "> 埋め込みペイロードを展開中: [####################] 100%", delay: 1200 },
+                { text: "> [SYSTEM] メモリバッファオーバーフローをシミュレート", delay: 600 },
+                { text: "> シェルアクセスを取得しました。ターゲット: user@local-pc", delay: 1500 },
+                { text: "> $ whoami", delay: 400 },
+                { text: "root", delay: 200 },
+                { text: "> $ ls -R /Documents/Sensitve", delay: 700 },
+                { text: "Finding: passwords.txt, bank_info.xlsx, private_key.pem", delay: 1000 },
+                { text: "> [EXFILTRATION] 外部サーバーへデータを送信中...", delay: 1500 },
+                { text: "> 送信完了。接続を隠蔽するためにバックドアを設置します。", delay: 1200 },
+                { text: "> 完了。画像ビューアを通常通り起動します...", delay: 2000 },
+                { text: "--- 攻撃体験終了 ---", delay: 500, color: "text-white font-bold" },
+                { text: "解説: この画像には特別なデータ領域に悪意あるコードが隠されていました。", delay: 1000, color: "text-blue-400" },
+                { text: "画像を開くアプリケーションの脆弱性を突くことで、何もせずとも感染します。", delay: 1000, color: "text-blue-400" }
+            ];
+
+            async function startExploit() {
+                const viewer = document.getElementById('viewer');
+                const terminal = document.getElementById('terminal');
+                const content = document.getElementById('terminal-content');
+
+                // viewer animation and terminal reveal sequence
+                viewer.classList.add('animate-bounce');
+                await new Promise(r => setTimeout(r, 500));
+                
+                terminal.classList.remove('hidden');
+
+                for (const log of logs) {
+                    const line = document.createElement('p');
+                    if (log.color) line.className = log.color;
+                    line.textContent = log.text;
+                    content.appendChild(line);
+                    terminal.scrollTop = terminal.scrollHeight;
+                    await new Promise(r => setTimeout(r, log.delay));
+                }
+
+                // For realism, we can add a button to close the terminal or go back to the message list
+                const btn = document.createElement('button');
+                btn.className = "mt-8 px-6 py-2 bg-green-600 text-white rounded font-bold hover:bg-green-700";
+                btn.textContent = "メッセージ一覧に戻る";
+                btn.onclick = () => window.close(); // or history.back()
+                content.appendChild(btn);
+            }
+        </script>
+    </body>
+</html>
