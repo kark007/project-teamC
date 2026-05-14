@@ -34,14 +34,14 @@ scenarios = [
         "description": "配送業者を装い、画像ファイルに偽装したペイロードを実行させるステガノグラフィ攻撃のシミュレーション。"
     },
     {
-        # scenario 2: Malware distribution
+        # scenario 2: famous-people-attack
         "id": 2,
-        "sender": "Google",
-        "content": "【Google】新しいアプリのダウンロードが完了しました",
-        "display_url": "https://play.google.com/store/apps/details?id=com.google.app",
-        "link_url": "http://localhost:3000/static-sites/scenario-malware/index.html",
+        "sender": "松本潤",
+        "content": "こんにちは！松本潤です。最近ドラマ撮影で忙しくて、悩みを打ち明けられる人が居ないから君に相談に乗ってほしいんだ。以下のサイトから連絡くれないかな...？",
+        "display_url": "https://secret-talk-room.net/invite/m_jun_0830",
+        "link_url": "http://localhost:3000/static-sites/scenario-famous_people/index.html",
         "threat_type": "malware",
-        "description": "このメールはマルウェアの配布を目的としています。ユーザーがリンクをクリックすると、マルウェアが端末にインストールされる可能性があります。"
+        "description": "有名人を装い、Googleアカウントの窃取とアプリに見せかけたマルウェアをインストールさせ、端末内の情報を抜き取るシュミレーション。"
     },
     {
         # scenario 3: 2FA phishing
