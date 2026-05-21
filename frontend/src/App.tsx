@@ -58,9 +58,9 @@ function App() {
                 </div>
                 
                 <h1 className="text-2xl font-black tracking-tight text-white leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
-                  不審メッセージ<br/>
+                  Information Security Lab<br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 font-extrabold animate-pulse">
-                    侵入・脅威シミュレータ
+                    DeSmishing
                   </span>
                 </h1>
                 <p className="text-[10px] text-red-400/60 mt-2 tracking-widest font-mono">SYS_STATUS: INFECTION_SIMULATION_ACTIVE</p>
