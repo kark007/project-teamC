@@ -97,7 +97,7 @@
 </head>
 <!-- 画面全体の中央にスマホを配置する -->
 
-<body class="bg-white flex justify-center items-center min-h-screen p-4">
+<body class="bg-gray-300 flex justify-center items-center min-h-screen p-4">
 
     <!-- スマホの本体枠（iPhone風のサイズ感：幅360px、高さ740px） -->
     <div
@@ -177,24 +177,24 @@
 
         <div id="ans" class="absolute text-center top-[10%] w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
         <!--解説ブロック-->
-        <div id="kaisetsu" class="hidden absolute z-50 bg-white rounded-lg p-4 space-y-1 text-lg shadow">
+        <div id="kaisetsu" class="hidden absolute z-50 bg-slate-800 border-2 border-slate-700 text-white rounded-lg p-4 space-y-1 text-lg shadow">
             <!--内容-->
-            <p class="text-center font-bold text-2xl pb-2">リアルタイムフィッシング</p>
-            <p>あなたの入力は、</p>
-            <div class="border p-2">
+            <p class="text-center font-bold text-2xl text-red-500 pb-2 border-b border-slate-700">リアルタイムフィッシング</p>
+            <p class="pt-2">あなたの入力は、</p>
+            <div class="border border-slate-300 p-2 rounded-lg">
                 <p id="input-id"></p>
                 <p id="input-pass"></p>
                 <p id="input-otp"></p>
             </div>
             <p>ですね。<span class="text-xs pl-2">この情報は保存されず、体験を終了すると削除されます。</span></p>
             <p class="pt-2">このように、ワンタイムパスワードの入力も含めて取得することが可能です。</p>
-            <p>攻撃者はリアルタイムに入力を待つことで、ワンタイムパスワードさえも盗み取ります。</p>
+            <p>攻撃者はユーザーの入力をリアルタイムに待つことで、ワンタイムパスワードさえも盗み取ります。</p>
             <p>SMSの<span class="text-red-500 font-bold">怪しいURLにはアクセスしない</span>ことが一番です。</p>
             <p>心配な場合はブラウザ検索やブックマーク、または公式アプリを利用して<span class="text-red-500 font-bold">公式サイトからログイン</span>しましょう。</p>
         </div>
         <!-- 閉じるボタン -->
         <button id="window-close-btn" onclick="window.close()"
-            class="hidden absolute mt-3 bottom-[10%] bg-slate-600 hover:bg-slate-600 text-lg text-slate-200 p-4 rounded-xl font-medium transition-colors">
+            class="hidden absolute mt-3 bottom-[10%] bg-red-500 hover:bg-red-600 text-lg text-slate-200 p-4 rounded-xl font-medium transition-colors">
             メッセージ一覧に戻る
         </button>
 
@@ -336,6 +336,7 @@
             let el_id = document.getElementById("userID");
             let el_pass = document.getElementById("password");
             let el_otp = document.getElementById("otp");
+            const placeholder = "*****"
             if (el_id) {
 
                 userID = el_id.value;
