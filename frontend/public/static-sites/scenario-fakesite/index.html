@@ -18,11 +18,11 @@
                         "sms-bounce": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s backwards",
                         "otp-alart": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s backwards",
                         "ans-txt": "ans-txt 1s 4s backwards",
-                        "ans-title": "ans-title 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 4s backwards",
+                        "ans-title": "ans-title 3s ease-in-out 4s backwards",
                         "ans-test": "ans-test 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 5s backwards",
                         "ans-bg": "ans-bg 1s 3.5s backwards",
-                        "notice": "fadein 0.5s 6s backwards",
-                        "window-close": "fadein 0.5s 7s backwards"
+                        "notice": "fadein 0.5s 7s backwards",
+                        "window-close": "fadein 0.5s 10s backwards"
                     },
                     keyframes: {
                         "slide-out-left": {
@@ -58,15 +58,16 @@
                             '100%': { opacity: "0" }
                         },
                         "ans-title": {
-                            '0%': { transform: 'translateY(200)', opacity: "0" },
-                            '10%': { transform: 'translateY(200)', opacity: "1" },
-                            '20%': { transform: 'translateY(200)', opacity: "0" },
-                            '30%': { transform: 'translateY(200)', opacity: "1" },
-                            '40%': { transform: 'translateY(200)', opacity: "0" },
-                            '50%': { transform: 'translateY(200)', opacity: "1" },
-                            '70%': { transform: 'translateY(100)', opacity: "1" },
-                            '90%': { transform: 'translateY(20)', opacity: "1" },
-                            '100%': { transform: 'translateY(0)', opacity: "1" },
+                            '0%': { opacity: '0', transform: 'translateY(300px)' },
+                            '10%': { opacity: '1' },
+                            '20%': { opacity: '0' },
+                            '30%': { opacity: '1' },
+                            '40%': { opacity: '0' },
+                            '50%': { opacity: '1'},
+                            '60%': { opacity: '1', transform: 'translateY(300px)' },
+
+                            // 上へスライド
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
                         "ans-test": {
                             "0%": {
@@ -170,11 +171,25 @@
             </div>
     </div>
 
+    <!--解説部分-->
     <div id="kaisetsu-bg"
         class="hidden absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-[2px] z-50 flex flex-col items-center justify-end p-6">
 
-        <div id="ans" class="absolute text-center w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
-        <div id="notice" class="hidden absolute text-center bottom-[40%] text-red-500 text-xl font-bold z-50">リアルタイムフィッシングに注意しましょう</div>
+        <div id="ans" class="absolute text-center top-[10%] w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
+        <!--解説ブロック-->
+        <div id="kaisetsu" class="hidden absolute z-50 bg-white rounded-md p-4">
+            <!--内容-->
+            <p class="text-center font-bold text-xl pb-2">リアルタイムフィッシング</p>
+            <p>あなたの入力は</p>
+            <p id="input-id"></p>
+            <p id="input-pass"></p>
+            <p id="input-otp"></p>
+            <p>ですね</p>
+            <p class="pt-1">このように，ワンタイムパスワードの入力も含めて取得することができます</p>
+            <p>リアルタイムに入力を待つことでワンタイムパスワードさえも利用されてしまいます</p>
+            <p>SMSのあやしいリンクは踏まないことが一番です</p>
+            <p>心配な場合はブラウザ検索やブックマークから確実に公式サイトへアクセスしましょう</p>
+        </div>
         <!-- 閉じるボタン -->
         <button id="window-close-btn" onclick="window.close()"
             class="hidden absolute mt-3 bottom-40 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 p-2 rounded-lg font-medium transition-colors">
@@ -185,9 +200,9 @@
 
     <script>
         // 画面ごとのコンテンツを定義
-        var userID = "testID";
-        var password = "testPass";
-        var otp = "000000";
+        var userID = "未入力";
+        var password = "未入力";
+        var otp = "未入力";
         const pages = {
             input_id: () => `
                 <div id="page-1" class="p-4 gap-4">
@@ -326,21 +341,24 @@
             }
             if (el_pass) {
 
-                userID = el_pass.value;
+                password = el_pass.value;
 
             }
 
             if (el_otp) {
                 otp = el_otp.value;
-                document.getElementById("ans").classList.add('animate-ans-txt');
+                //document.getElementById("ans").classList.add('animate-ans-txt');
                 document.getElementById("ans").classList.add('animate-ans-title');
                 //document.getElementById("ans").classList.add('animate-ans-title');
                 document.getElementById("kaisetsu-bg").classList.remove('hidden');
                 document.getElementById("kaisetsu-bg").classList.add('animate-ans-bg');
-                document.getElementById("notice").classList.remove('hidden');
-                document.getElementById("notice").classList.add('animate-notice');
+                document.getElementById("kaisetsu").classList.remove('hidden');
+                document.getElementById("kaisetsu").classList.add('animate-notice');
                 document.getElementById("window-close-btn").classList.remove('hidden');
                 document.getElementById("window-close-btn").classList.add('animate-window-close');
+                document.getElementById('input-id').textContent = '電話番号またはメールアドレス\t【' + userID +'】';
+                document.getElementById('input-pass').textContent = 'パスワード\t【'+ password +'】';
+                document.getElementById('input-otp').textContent = 'ワンタイムパスワード\t【' + otp +'】';
             }
 
             // 指定したページ名が定義されていれば表示、なければ404を表示
