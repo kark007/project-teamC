@@ -23,7 +23,6 @@
                         "ans-bg": "ans-bg 1s 3.5s backwards",
                         "notice": "fadein 0.5s 6s backwards",
                         "window-close": "fadein 0.5s 7s backwards"
-
                     },
                     keyframes: {
                         "slide-out-left": {
@@ -99,11 +98,11 @@
 
 <body class="bg-white flex justify-center items-center min-h-screen p-4">
 
-    <!-- 📱 スマホの本体枠（iPhone風のサイズ感：幅360px、高さ740px） -->
+    <!-- スマホの本体枠（iPhone風のサイズ感：幅360px、高さ740px） -->
     <div
         class="w-[360px] h-[740px] bg-white rounded-[40px] shadow-2xl border-[12px] border-slate-800 relative overflow-hidden flex flex-col">
 
-        <!-- 1. スマホの上部ノッチ（インカメラの黒い部分） -->
+        <!-- スマホの上部ノッチ（インカメラの黒い部分） -->
         <div class="flex justify-between px-5 pt-1.5">
             <span class="font-bold text-xs">
                 12:34
@@ -123,7 +122,7 @@
 
         </header>
 
-        <!-- 3. アプリのメイン中身（★ここがスマホのようにスクロールします） -->
+        <!-- アプリの中身 -->
         <main class="flex-1 overflow-y-auto bg-white flex flex-col">
             <!--サイトのヘッダ-->
             <div class="header flex-grow max-h-10 bg-slate-800">
@@ -133,36 +132,7 @@
 
 
             <div id="content" class="min-h-40">
-                <!--サイトの中身-->
-                <div id="page-1" class="p-4 gap-4">
-                    <div class="grid gap-y-1 space-y-4">
-                        <div class="text-lg">サインインまたはアカウントを作成</div>
-                        <div>
-                            <div class="text-xs font-bold">携帯電話番号またはEメールアドレスを入力してください</div>
-                            <div class="max-width: 768px; text-center">
-                                <form class="space-y-4">
-                                    <input id="userID" type="text" class="p-1 border rounded-sm shadow-inner w-full"
-                                        autocomplete="off">
-                                    <br />
-                                    <input type="button" id="submit-id-btn" onclick="changePage('login')"
-                                        class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
-                                        data-to="page-2" value="次に進む">
-                                </form>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-400">続行することでamazonの<a href="" tabindex: -1;
-                                    class="text-cyan-700">利用規約</a>および<a href="#"
-                                    class="text-cyan-700">プライバシー規約</a>に同意したものとみなされます。</p>
-                            <a href="#" class="text-sm text-cyan-700">ヘルプが必要ですか？</a>
-                        </div>
-                        <div>
-                            <p class="border-t pb-2"></p>
-                            <p class="font-bold">業務用にご購入ですか？</p>
-                            <a href="#" class="text-cyan-700">無料のビジネスアカウントを作成する</a>
-                        </div>
-                    </div>
-                </div>
+                <!--サイトの中身 changePageで書き込む-->
             </div>
 
             <!--サイトのフッター-->
@@ -187,7 +157,7 @@
         </main>
 
 
-        <!-- 4. スマホのフッター（下部ナビ） -->
+        <!-- スマホのフッター -->
         <footer
             class="bg-white border-t border-gray-200 py-3 px-6 flex justify-between items-center text-xs text-gray-500 flex-shrink-0">
             <div class="py-2 px-4 flex justify-between rounded-2xl bg-white shadow w-full text-sm">
@@ -205,7 +175,7 @@
 
         <div id="ans" class="absolute text-center w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
         <div id="notice" class="hidden absolute text-center bottom-[40%] text-red-500 text-xl font-bold z-50">リアルタイムフィッシングに注意しましょう</div>
-        <!-- 閉じる用のダミーボタン -->
+        <!-- 閉じるボタン -->
         <button id="window-close-btn" onclick="window.close()"
             class="hidden absolute mt-3 bottom-40 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 p-2 rounded-lg font-medium transition-colors">
             画面を閉じる
@@ -226,14 +196,14 @@
                     <div>
                         <div class="text-xs font-bold">携帯電話番号またはEメールアドレスを入力してください</div>
                         <div class="max-width: 768px; text-center">
-                            <div class="space-y-4">
+                            <form class="space-y-4" onSubmit="changePage('login')">
                                 <input id="userID" type="text" class="p-1 border rounded-sm shadow-inner w-full"
                                     autocomplete="off">
                                 <br />
-                                <button id="submit-id-btn" onclick="changePage('login')"
+                                <input type="submit" id="submit-id-btn" onclick="changePage('login')"
                                     class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
-                                    data-to="page-2">次に進む</button>
-                            </div>
+                                    data-to="page-2" value="次に進む">
+                            </form>
                         </div>
                     </div>
                     <div>
@@ -254,20 +224,18 @@
 
                     <div class="text-2xl">ログイン</div>
                     <div class="space-y-4">
-                        <!--パスワード忘れは404以外のエラー画面を出す. リンク先は後で決める.-->
                         <div class="space-y-4 text-sm">${userID}<a onclick="changePage('input_id')" class="text-cyan-700"> 変更</a></div>
                         <div class="max-width: 768px;">
                             <div class="flex text-sm font-bold">amazonのパスワード</div>
-                            <div class="space-y-4">
-                                <input id="password" type="text" name="password" placeholder="amazonのパスワード"
+                            <form class="space-y-4" onsubmit="changePage('otp')">
+                                <input id="password" type="password" name="password" placeholder="amazonのパスワード"
                                     class="p-1 border rounded-sm shadow-inner w-full" autocomplete="off">
                                 <br />
                                 <span class="w-right"><a href="#" class="text-cyan-700">パスワードを忘れた方</a></span>
                                 <button id="submit-pass-btn" onclick="changePage('otp')" class="rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2 text-center">ログイン</button>
-                            </div>
+                            </form>
                         </div>
                     </div>
-
             </div>
             `,
             info_1: () => `
@@ -277,13 +245,13 @@
                 <p>password: ${password}</p>
             `,
             stolen: () => `
-            <!-- 💬 SMS通知風コンポーネント (animate-sms-bounce を付与) -->
+            <!-- SMS通知 -->
             <div class="animate-sms-bounce delay-[2s] absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/20 flex items-center gap-3 z-40">
-                <!-- アイコン風の丸 -->
+                <!-- アイコン -->
                 <div class="w-10 h-10 bg-sky-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
                     <ion-icon name="mail-outline"></ion-icon>
                 </div>
-                <!-- メッセージ本文 -->
+                <!-- メッセージ -->
                 <div class="flex-1 min-w-0">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-slate-900 truncate">amazon</span>
@@ -293,6 +261,7 @@
                     <p class="text-xs text-slate-700 truncate mt-0.5">誰かがあなたのアカウントにログインしました。身に覚えのない場合はパスワードを変更してください。</p>
                 </div>
             </div>
+
             <div class="p-4 gap-4">
                 <div class="pb-4">
                     <p class="text-2xl">認証が完了しました</p>
@@ -302,16 +271,15 @@
                     <button id="close-btn" onclick="" class="rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2 text-center">閉じる</button>
                 </div>
             </div>
-            
             `,
             otp: () => `
-            <!-- 💬 SMS通知風コンポーネント (animate-sms-bounce を付与) -->
+            <!-- SMS通知 -->
             <div class="animate-sms-bounce delay-[0.5s] absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/20 flex items-center gap-3 z-40">
-                <!-- アイコン風の丸 -->
+                <!-- アイコン -->
                 <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
-                <!-- メッセージ本文 -->
+                <!-- メッセージ -->
                 <div class="flex-1 min-w-0">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-slate-900 truncate">amazon</span>
@@ -326,14 +294,14 @@
                     <div>
                         <div class="text-md">セキュリティを強化するために、登録された電話番号に送信されたワンタイムパスワードを入力してください。</div>
                         <div class="max-width: 768px; text-center">
-                            <div class="space-y-4">
+                            <form class="space-y-4" onsubmit="changePage('stolen')">
                                 <input id="otp" type="text" class="p-1 border rounded-sm shadow-inner w-full" placeholder="ワンタイムパスワード"
                                     autocomplete="off">
                                 <br />
-                                <button id="otp-btn" onclick="changePage('stolen')"
+                                <input type="submit" id="otp-btn" onclick="changePage('stolen')"
                                     class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
-                                    data-to="page-2">ログイン</button>
-                            </div>
+                                    data-to="page-2" value="ログイン">
+                            </form>
                         </div>
                     </div>
                     <div>
@@ -342,9 +310,6 @@
                 </div>
             </div>
             `
-
-            
-
         };
 
         // 画面を切り替える関数
@@ -388,8 +353,8 @@
 
         }
 
-        // 初期表示（ホーム画面）
-        //changePage('input_id');
+        // 初期表示
+        changePage('input_id');
     </script>
 </body>
 
