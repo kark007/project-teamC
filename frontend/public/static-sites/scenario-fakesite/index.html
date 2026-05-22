@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>amazon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        "slide-out-left": "slide-out-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940)   both",
+                        "slide-in-right": "slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940)   both",
+                        "sms-bounce": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s backwards",
+                        "otp-alart": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s backwards",
+                        "ans-txt": "ans-txt 1s 4s backwards",
+                        "ans-title": "ans-title 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 4s backwards",
+                        "ans-test": "ans-test 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 5s backwards",
+                        "ans-bg": "ans-bg 1s 3.5s backwards",
+                        "notice": "fadein 0.5s 6s backwards",
+                        "window-close": "fadein 0.5s 7s backwards"
+
+                    },
+                    keyframes: {
+                        "slide-out-left": {
+                            "0%": {
+                                transform: "translateX(0)",
+                                opacity: "1"
+                            },
+                            to: {
+                                transform: "translateX(-1000px)",
+                                opacity: "0"
+                            }
+                        },
+                        "slide-in-right": {
+                            "0%": {
+                                transform: "translateX(1000px)",
+                                opacity: "0"
+                            },
+                            to: {
+                                transform: "translateX(0)",
+                                opacity: "1"
+                            }
+                        },
+                        "smsIn": {
+                            '0%': { transform: 'translateY(-100px)', opacity: '0' },
+                            '70%': { transform: 'translateY(10px)', opacity: '1' }, // ちょっと行き過ぎる
+                            '100%': { transform: 'translateY(0)', opacity: '1' }    // 定位置に戻る
+                        },
+                        "ans-txt": {
+                            '0%': { opacity: "0" },
+                            '25%': { opacity: "1" },
+                            '50%': { opacity: "0" },
+                            '75%': { opacity: "1" },
+                            '100%': { opacity: "0" }
+                        },
+                        "ans-title": {
+                            '0%': { transform: 'translateY(200)', opacity: "0" },
+                            '10%': { transform: 'translateY(200)', opacity: "1" },
+                            '20%': { transform: 'translateY(200)', opacity: "0" },
+                            '30%': { transform: 'translateY(200)', opacity: "1" },
+                            '40%': { transform: 'translateY(200)', opacity: "0" },
+                            '50%': { transform: 'translateY(200)', opacity: "1" },
+                            '70%': { transform: 'translateY(100)', opacity: "1" },
+                            '90%': { transform: 'translateY(20)', opacity: "1" },
+                            '100%': { transform: 'translateY(0)', opacity: "1" },
+                        },
+                        "ans-test": {
+                            "0%": {
+                                transform: "translateY(200px)",
+                                opacity: "1"
+                            },
+                            to: {
+                                transform: "translateY(0)",
+                                opacity: "1"
+                            }
+                        },
+                        "ans-bg": {
+                            '0%': { opacity: "0" },
+                            '20%': { opacity: "1" }
+                        },
+                        "fadein": {
+                            '0%': { opacity: "0" },
+                            '50%': { opacity: "1" }
+                        }
+                    }
+                }
+            }
+
+        }
+    </script>
+
+</head>
+<!-- 画面全体の中央にスマホを配置する -->
+
+<body class="bg-white flex justify-center items-center min-h-screen p-4">
+
+    <!-- 📱 スマホの本体枠（iPhone風のサイズ感：幅360px、高さ740px） -->
+    <div
+        class="w-[360px] h-[740px] bg-white rounded-[40px] shadow-2xl border-[12px] border-slate-800 relative overflow-hidden flex flex-col">
+
+        <!-- 1. スマホの上部ノッチ（インカメラの黒い部分） -->
+        <div class="flex justify-between px-5 pt-1.5">
+            <span class="font-bold text-xs">
+                12:34
+            </span>
+            <span class="text-xs text-right">
+                <ion-icon name="cellular-outline" class="px-0.5"></ion-icon>
+                <ion-icon name="wifi-outline" class="px-0.5"></ion-icon>
+                <ion-icon name="battery-full-outline" class="px-0.5"></ion-icon>
+            </span>
+        </div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-slate-800 rounded-b-xl z-40"></div>
+
+        <!-- ブラウザアプリのヘッダ -->
+        <header class="bg-white text-slate-900 pt-6 pb-3 px-4 flex justify-between items-center flex-shrink-0">
+
+            <span class="rounded-2xl bg-white shadow w-full p-1 text-sm text-center">amazon.com</span>
+
+        </header>
+
+        <!-- 3. アプリのメイン中身（★ここがスマホのようにスクロールします） -->
+        <main class="flex-1 overflow-y-auto bg-white flex flex-col">
+            <!--サイトのヘッダ-->
+            <div class="header flex-grow max-h-10 bg-slate-800">
+                <img src="./images/amazon_logo.png" alt="amazon.com" width="80"
+                    class="pt-1 pb-0.5 pl-2">
+            </div>
+
+
+            <div id="content" class="min-h-40">
+                <!--サイトの中身-->
+                <div id="page-1" class="p-4 gap-4">
+                    <div class="grid gap-y-1 space-y-4">
+                        <div class="text-lg">サインインまたはアカウントを作成</div>
+                        <div>
+                            <div class="text-xs font-bold">携帯電話番号またはEメールアドレスを入力してください</div>
+                            <div class="max-width: 768px; text-center">
+                                <form class="space-y-4">
+                                    <input id="userID" type="text" class="p-1 border rounded-sm shadow-inner w-full"
+                                        autocomplete="off">
+                                    <br />
+                                    <input type="button" id="submit-id-btn" onclick="changePage('login')"
+                                        class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
+                                        data-to="page-2" value="次に進む">
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400">続行することでamazonの<a href="" tabindex: -1;
+                                    class="text-cyan-700">利用規約</a>および<a href="#"
+                                    class="text-cyan-700">プライバシー規約</a>に同意したものとみなされます。</p>
+                            <a href="#" class="text-sm text-cyan-700">ヘルプが必要ですか？</a>
+                        </div>
+                        <div>
+                            <p class="border-t pb-2"></p>
+                            <p class="font-bold">業務用にご購入ですか？</p>
+                            <a href="#" class="text-cyan-700">無料のビジネスアカウントを作成する</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--サイトのフッター-->
+            <div
+                class="footer text-white flex-grow max-h-48 space-y-4 place-items-center justify-center border-t-2 bg-slate-950">
+                <div class="pt-3">
+                    <div class="flex pt-2 pb-2">
+                        <div class="pr-2 pl-2">日本語</div>
+                        <div class="pr-2 pl-2">日本</div>
+                    </div>
+                </div>
+                <p>検索・閲覧履歴</p>
+                <dev class="flex place-items-center justify-center flex-wrap text-xs">
+                    <div class="px-0.5">各種規約</div>
+                    <div class="px-0.5">特定商取引法に関する表示</div>
+                    <div class="px-0.5">利用規約</div>
+                    <div class="px-0.5">プライバシー規約</div>
+                    <div class="px-0.5">パーソナライズド広告規約</div>
+                </dev>
+                <p class="text-xs">&copy;2026 amazon.com</p>
+            </div>
+        </main>
+
+
+        <!-- 4. スマホのフッター（下部ナビ） -->
+        <footer
+            class="bg-white border-t border-gray-200 py-3 px-6 flex justify-between items-center text-xs text-gray-500 flex-shrink-0">
+            <div class="py-2 px-4 flex justify-between rounded-2xl bg-white shadow w-full text-sm">
+                <button class="js-navigate" data-to="page-1"><ion-icon name="chevron-back-outline"></ion-icon></button>
+                <button class="js-navigate" data-to="page-2"><ion-icon
+                        name="chevron-forward-outline"></ion-icon></button>
+                <button><ion-icon name="share-outline"></ion-icon></button>
+                <button><ion-icon name="book-outline"></ion-icon></button>
+                <button><ion-icon name="copy-outline"></ion-icon></button>
+            </div>
+    </div>
+
+    <div id="kaisetsu-bg"
+        class="hidden absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-[2px] z-50 flex flex-col items-center justify-end p-6">
+
+        <div id="ans" class="absolute text-center w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
+        <div id="notice" class="hidden absolute text-center bottom-[40%] text-red-500 text-xl font-bold z-50">リアルタイムフィッシングに注意しましょう</div>
+        <!-- 閉じる用のダミーボタン -->
+        <button id="window-close-btn" onclick="window.close()"
+            class="hidden absolute mt-3 bottom-40 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 p-2 rounded-lg font-medium transition-colors">
+            画面を閉じる
+        </button>
+
+    </div>
+
+    <script>
+        // 画面ごとのコンテンツを定義
+        var userID = "testID";
+        var password = "testPass";
+        var otp = "000000";
+        const pages = {
+            input_id: () => `
+                <div id="page-1" class="p-4 gap-4">
+                <div class="grid gap-y-1 space-y-4">
+                    <div class="text-lg">サインインまたはアカウントを作成</div>
+                    <div>
+                        <div class="text-xs font-bold">携帯電話番号またはEメールアドレスを入力してください</div>
+                        <div class="max-width: 768px; text-center">
+                            <div class="space-y-4">
+                                <input id="userID" type="text" class="p-1 border rounded-sm shadow-inner w-full"
+                                    autocomplete="off">
+                                <br />
+                                <button id="submit-id-btn" onclick="changePage('login')"
+                                    class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
+                                    data-to="page-2">次に進む</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400">続行することでamazonの<a href="#" class="text-cyan-700">利用規約</a>および<a
+                                href="#" class="text-cyan-700">プライバシー規約</a>に同意したものとみなされます。</p>
+                        <a href="#" class="text-sm text-cyan-700">ヘルプが必要ですか？</a>
+                    </div>
+                    <div>
+                        <p class="border-t pb-2"></p>
+                        <p class="font-bold">業務用にご購入ですか？</p>
+                        <a href="#" class="text-cyan-700">無料のビジネスアカウントを作成する</a>
+                    </div>
+                </div>
+            </div>
+            `,
+            login: () => `
+                <div id="page-2" class="p-4 gap-4">
+
+                    <div class="text-2xl">ログイン</div>
+                    <div class="space-y-4">
+                        <!--パスワード忘れは404以外のエラー画面を出す. リンク先は後で決める.-->
+                        <div class="space-y-4 text-sm">${userID}<a onclick="changePage('input_id')" class="text-cyan-700"> 変更</a></div>
+                        <div class="max-width: 768px;">
+                            <div class="flex text-sm font-bold">amazonのパスワード</div>
+                            <div class="space-y-4">
+                                <input id="password" type="text" name="password" placeholder="amazonのパスワード"
+                                    class="p-1 border rounded-sm shadow-inner w-full" autocomplete="off">
+                                <br />
+                                <span class="w-right"><a href="#" class="text-cyan-700">パスワードを忘れた方</a></span>
+                                <button id="submit-pass-btn" onclick="changePage('otp')" class="rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2 text-center">ログイン</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+            `,
+            info_1: () => `
+                <h1>お問い合わせ画面</h1>
+                <p>ご質問はこちらのフォームからどうぞ。</p>
+                <p>userID: ${userID}</p>
+                <p>password: ${password}</p>
+            `,
+            stolen: () => `
+            <!-- 💬 SMS通知風コンポーネント (animate-sms-bounce を付与) -->
+            <div class="animate-sms-bounce delay-[2s] absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/20 flex items-center gap-3 z-40">
+                <!-- アイコン風の丸 -->
+                <div class="w-10 h-10 bg-sky-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                    <ion-icon name="mail-outline"></ion-icon>
+                </div>
+                <!-- メッセージ本文 -->
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-900 truncate">amazon</span>
+                        <span class="text-[10px] text-slate-500">今</span>
+                    </div>
+                    <p class="text-sm">ログイン</p>
+                    <p class="text-xs text-slate-700 truncate mt-0.5">誰かがあなたのアカウントにログインしました。身に覚えのない場合はパスワードを変更してください。</p>
+                </div>
+            </div>
+            <div class="p-4 gap-4">
+                <div class="pb-4">
+                    <p class="text-2xl">認証が完了しました</p>
+                </div>
+                <div>
+                    <p>ブラウザを閉じてください</p>
+                    <button id="close-btn" onclick="" class="rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2 text-center">閉じる</button>
+                </div>
+            </div>
+            
+            `,
+            otp: () => `
+            <!-- 💬 SMS通知風コンポーネント (animate-sms-bounce を付与) -->
+            <div class="animate-sms-bounce delay-[0.5s] absolute top-4 left-4 right-4 bg-white/90 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/20 flex items-center gap-3 z-40">
+                <!-- アイコン風の丸 -->
+                <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <!-- メッセージ本文 -->
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-900 truncate">amazon</span>
+                        <span class="text-[10px] text-slate-500">今</span>
+                    </div>
+                    <p class="text-xs text-slate-700 truncate mt-0.5">認証コードは 123456 です。このコードは他人に教えないでください</p>
+                </div>
+            </div>
+            <div id="page-1" class="p-4 gap-4">
+                <div class="grid gap-y-1 space-y-4">
+                    <div class="text-xl font-bold">2段階認証</div>
+                    <div>
+                        <div class="text-md">セキュリティを強化するために、登録された電話番号に送信されたワンタイムパスワードを入力してください。</div>
+                        <div class="max-width: 768px; text-center">
+                            <div class="space-y-4">
+                                <input id="otp" type="text" class="p-1 border rounded-sm shadow-inner w-full" placeholder="ワンタイムパスワード"
+                                    autocomplete="off">
+                                <br />
+                                <button id="otp-btn" onclick="changePage('stolen')"
+                                    class="js-navigate rounded-2xl bg-yellow-300 hover:bg-yellow-400 w-full text-sm p-2"
+                                    data-to="page-2">ログイン</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="text-sm text-cyan-700">コードを再送</a>
+                    </div>
+                </div>
+            </div>
+            `
+
+            
+
+        };
+
+        // 画面を切り替える関数
+        function changePage(pageName) {
+
+            const contentDiv = document.getElementById('content');
+            let el_id = document.getElementById("userID");
+            let el_pass = document.getElementById("password");
+            let el_otp = document.getElementById("otp");
+            if (el_id) {
+
+                userID = el_id.value;
+
+            }
+            if (el_pass) {
+
+                userID = el_pass.value;
+
+            }
+
+            if (el_otp) {
+                otp = el_otp.value;
+                document.getElementById("ans").classList.add('animate-ans-txt');
+                document.getElementById("ans").classList.add('animate-ans-title');
+                //document.getElementById("ans").classList.add('animate-ans-title');
+                document.getElementById("kaisetsu-bg").classList.remove('hidden');
+                document.getElementById("kaisetsu-bg").classList.add('animate-ans-bg');
+                document.getElementById("notice").classList.remove('hidden');
+                document.getElementById("notice").classList.add('animate-notice');
+                document.getElementById("window-close-btn").classList.remove('hidden');
+                document.getElementById("window-close-btn").classList.add('animate-window-close');
+            }
+
+            // 指定したページ名が定義されていれば表示、なければ404を表示
+            if (pages[pageName]) {
+                contentDiv.innerHTML = pages[pageName]();
+
+            } else {
+                contentDiv.innerHTML = '<h1>404 ページが見つかりません</h1>';
+            }
+
+        }
+
+        // 初期表示（ホーム画面）
+        //changePage('input_id');
+    </script>
+</body>
+
+</html>

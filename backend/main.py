@@ -46,10 +46,10 @@ scenarios = [
     {
         # scenario 3: 2FA phishing
         "id": 3,
-        "sender": "Microsoft",
-        "content": "【Microsoft】2段階認証のコードを入力してください",
-        "display_url": "https://account.microsoft.com/security",
-        "link_url": "http://localhost:3000/static-sites/scenario-2fa/index.html",
+        "sender": "amazon",
+        "content": "不正にログインされた可能性があります。ログインしてアカウントを保護してください。",
+        "display_url": "https://account.amzn.com/",
+        "link_url": "http://localhost:3000/static-sites/scenario-fakesite/index.html",
         "threat_type": "2fa",
         "description": "このメールは2段階認証のフィッシングを目的としています。ユーザーがリンクをクリックすると、認証情報を盗む可能性があります。"
     }
