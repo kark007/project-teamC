@@ -18,11 +18,11 @@
                         "sms-bounce": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2s backwards",
                         "otp-alart": "smsIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s backwards",
                         "ans-txt": "ans-txt 1s 4s backwards",
-                        "ans-title": "ans-title 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 4s backwards",
+                        "ans-title": "ans-title 3s ease-in-out 4s backwards",
                         "ans-test": "ans-test 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) 5s backwards",
                         "ans-bg": "ans-bg 1s 3.5s backwards",
-                        "notice": "fadein 0.5s 6s backwards",
-                        "window-close": "fadein 0.5s 7s backwards"
+                        "notice": "fadein 0.8s 7s backwards",
+                        "window-close": "fadein 0.5s 10s backwards"
                     },
                     keyframes: {
                         "slide-out-left": {
@@ -58,15 +58,16 @@
                             '100%': { opacity: "0" }
                         },
                         "ans-title": {
-                            '0%': { transform: 'translateY(200)', opacity: "0" },
-                            '10%': { transform: 'translateY(200)', opacity: "1" },
-                            '20%': { transform: 'translateY(200)', opacity: "0" },
-                            '30%': { transform: 'translateY(200)', opacity: "1" },
-                            '40%': { transform: 'translateY(200)', opacity: "0" },
-                            '50%': { transform: 'translateY(200)', opacity: "1" },
-                            '70%': { transform: 'translateY(100)', opacity: "1" },
-                            '90%': { transform: 'translateY(20)', opacity: "1" },
-                            '100%': { transform: 'translateY(0)', opacity: "1" },
+                            '0%': { opacity: '0', transform: 'translateY(300px)' },
+                            '10%': { opacity: '1' },
+                            '20%': { opacity: '0' },
+                            '30%': { opacity: '1' },
+                            '40%': { opacity: '0' },
+                            '50%': { opacity: '1'},
+                            '60%': { opacity: '1', transform: 'translateY(300px)' },
+
+                            // 上へスライド
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
                         "ans-test": {
                             "0%": {
@@ -96,7 +97,7 @@
 </head>
 <!-- 画面全体の中央にスマホを配置する -->
 
-<body class="bg-white flex justify-center items-center min-h-screen p-4">
+<body class="bg-gray-300 flex justify-center items-center min-h-screen p-4">
 
     <!-- スマホの本体枠（iPhone風のサイズ感：幅360px、高さ740px） -->
     <div
@@ -170,24 +171,46 @@
             </div>
     </div>
 
+    <!--解説部分-->
     <div id="kaisetsu-bg"
         class="hidden absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-[2px] z-50 flex flex-col items-center justify-end p-6">
 
-        <div id="ans" class="absolute text-center w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
-        <div id="notice" class="hidden absolute text-center bottom-[40%] text-red-500 text-xl font-bold z-50">リアルタイムフィッシングに注意しましょう</div>
+        <div id="ans" class="absolute text-center top-[10%] w-full text-red-500 text-4xl font-bold z-50">アカウント情報が盗まれました</div>
+        <!--解説ブロック-->
+        <div id="kaisetsu" class="hidden absolute z-50 bg-slate-800 border-2 border-slate-700 text-white rounded-lg p-4 space-y-1 text-lg shadow">
+            <!--内容-->
+            <p class="text-center font-bold text-2xl text-red-500 pb-2 border-b border-slate-700">リアルタイムフィッシング</p>
+            <p class="pt-2">あなたの入力は、</p>
+            <div class="border border-slate-300 p-2 rounded-lg">
+                <p id="input-id"></p>
+                <p><span id="input-pass"></span>
+                    <span>
+                        <button class="text-sm underline" id="pass-hide-btn" onclick="hideTxt()">表示切替</button>
+                    </span>
+                </p>
+                <p id="input-otp"></p>
+            </div>
+            <p>ですね。<span class="text-xs pl-2">この情報は保存されず、体験を終了すると削除されます。</span></p>
+            <p class="pt-2">このように、ワンタイムパスワードの入力も含めて取得することが可能です。</p>
+            <p>攻撃者はユーザーの入力をリアルタイムに待つことで、ワンタイムパスワードさえも盗み取ります。</p>
+            <p>SMSの<span class="text-red-500 font-bold">怪しいURLにはアクセスしない</span>ことが一番です。</p>
+            <p>心配な場合はブラウザ検索やブックマーク、または公式アプリを利用して<span class="text-red-500 font-bold">公式サイトからログイン</span>しましょう。</p>
+        </div>
         <!-- 閉じるボタン -->
         <button id="window-close-btn" onclick="window.close()"
-            class="hidden absolute mt-3 bottom-40 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 p-2 rounded-lg font-medium transition-colors">
-            画面を閉じる
+            class="hidden absolute mt-3 bottom-[10%] bg-red-500 hover:bg-red-600 text-lg text-slate-200 p-4 rounded-xl font-medium transition-colors">
+            メッセージ一覧に戻る
         </button>
 
     </div>
 
     <script>
         // 画面ごとのコンテンツを定義
-        var userID = "testID";
-        var password = "testPass";
-        var otp = "000000";
+        var userID = "未入力";
+        var password = "未入力";
+        var otp = "未入力";
+        var hideflag = true;
+        const secret = "*****";
         const pages = {
             input_id: () => `
                 <div id="page-1" class="p-4 gap-4">
@@ -319,6 +342,7 @@
             let el_id = document.getElementById("userID");
             let el_pass = document.getElementById("password");
             let el_otp = document.getElementById("otp");
+            
             if (el_id) {
 
                 userID = el_id.value;
@@ -326,21 +350,29 @@
             }
             if (el_pass) {
 
-                userID = el_pass.value;
+                password = el_pass.value;
 
             }
 
             if (el_otp) {
                 otp = el_otp.value;
-                document.getElementById("ans").classList.add('animate-ans-txt');
+                //document.getElementById("ans").classList.add('animate-ans-txt');
                 document.getElementById("ans").classList.add('animate-ans-title');
                 //document.getElementById("ans").classList.add('animate-ans-title');
                 document.getElementById("kaisetsu-bg").classList.remove('hidden');
                 document.getElementById("kaisetsu-bg").classList.add('animate-ans-bg');
-                document.getElementById("notice").classList.remove('hidden');
-                document.getElementById("notice").classList.add('animate-notice');
+                document.getElementById("kaisetsu").classList.remove('hidden');
+                document.getElementById("kaisetsu").classList.add('animate-notice');
                 document.getElementById("window-close-btn").classList.remove('hidden');
                 document.getElementById("window-close-btn").classList.add('animate-window-close');
+                document.getElementById('input-id').textContent = '- 電話番号またはメールアドレス\t【' + userID +'】';
+                if(hideflag){
+                    document.getElementById('input-pass').textContent = '- パスワード\t【'+ secret +'】';
+                }
+                else{
+                    document.getElementById('input-pass').textContent = '- パスワード\t【'+ password +'】';
+                }
+                document.getElementById('input-otp').textContent = '- ワンタイムパスワード\t【' + otp +'】';
             }
 
             // 指定したページ名が定義されていれば表示、なければ404を表示
@@ -351,6 +383,19 @@
                 contentDiv.innerHTML = '<h1>404 ページが見つかりません</h1>';
             }
 
+        }
+
+        function hideTxt(){
+            if(hideflag){
+                hideflag = false;
+                console.log(hideflag);
+                document.getElementById('input-pass').textContent = '- パスワード\t【'+ password +'】';
+            }
+            else{
+                hideflag = true;
+                console.log(hideflag);
+                document.getElementById('input-pass').textContent = '- パスワード\t【'+ secret +'】';
+            }
         }
 
         // 初期表示
