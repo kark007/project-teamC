@@ -183,7 +183,11 @@
             <p class="pt-2">あなたの入力は、</p>
             <div class="border border-slate-300 p-2 rounded-lg">
                 <p id="input-id"></p>
-                <p id="input-pass"></p>
+                <p><span id="input-pass"></span>
+                    <span>
+                        <button class="text-sm underline" id="pass-hide-btn" onclick="hideTxt()">表示切替</button>
+                    </span>
+                </p>
                 <p id="input-otp"></p>
             </div>
             <p>ですね。<span class="text-xs pl-2">この情報は保存されず、体験を終了すると削除されます。</span></p>
@@ -205,6 +209,8 @@
         var userID = "未入力";
         var password = "未入力";
         var otp = "未入力";
+        var hideflag = true;
+        const secret = "*****";
         const pages = {
             input_id: () => `
                 <div id="page-1" class="p-4 gap-4">
@@ -336,7 +342,7 @@
             let el_id = document.getElementById("userID");
             let el_pass = document.getElementById("password");
             let el_otp = document.getElementById("otp");
-            const placeholder = "*****"
+            
             if (el_id) {
 
                 userID = el_id.value;
@@ -360,7 +366,12 @@
                 document.getElementById("window-close-btn").classList.remove('hidden');
                 document.getElementById("window-close-btn").classList.add('animate-window-close');
                 document.getElementById('input-id').textContent = '- 電話番号またはメールアドレス\t【' + userID +'】';
-                document.getElementById('input-pass').textContent = '- パスワード\t【'+ password +'】';
+                if(hideflag){
+                    document.getElementById('input-pass').textContent = '- パスワード\t【'+ secret +'】';
+                }
+                else{
+                    document.getElementById('input-pass').textContent = '- パスワード\t【'+ password +'】';
+                }
                 document.getElementById('input-otp').textContent = '- ワンタイムパスワード\t【' + otp +'】';
             }
 
@@ -372,6 +383,19 @@
                 contentDiv.innerHTML = '<h1>404 ページが見つかりません</h1>';
             }
 
+        }
+
+        function hideTxt(){
+            if(hideflag){
+                hideflag = false;
+                console.log(hideflag);
+                document.getElementById('input-pass').textContent = '- パスワード\t【'+ password +'】';
+            }
+            else{
+                hideflag = true;
+                console.log(hideflag);
+                document.getElementById('input-pass').textContent = '- パスワード\t【'+ secret +'】';
+            }
         }
 
         // 初期表示
