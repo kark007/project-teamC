@@ -26,7 +26,7 @@ scenarios = [
     {
         # scenario 1: Steganography-based phishing
         "id": 1,
-        "sender": "ヤマト運輸",
+        "sender": "シロイヌマスラオ",
         "content": "【重要】お荷物をお届けにあがりましたが不在のため持ち帰りました。配送伝票の画像より詳細をご確認ください：",
         "display_url": "https://www.kuronekoyamato.co.jp/ytc/customer/redelivery/",
         "link_url": "http://localhost:3000/static-sites/scenario-stegano/index.html",
