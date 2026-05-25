@@ -36,8 +36,8 @@ scenarios = [
     {
         # scenario 2: famous-people-attack
         "id": 2,
-        "sender": "松本潤",
-        "content": "こんにちは！松本潤です。最近ドラマ撮影で忙しくて、悩みを打ち明けられる人が居ないから君に相談に乗ってほしいんだ。以下のサイトから連絡くれないかな...？",
+        "sender": "松〇潤",
+        "content": "こんにちは！松〇潤です。最近ドラマ撮影で忙しくて、悩みを打ち明けられる人が居ないから君に相談に乗ってほしいんだ。以下のサイトから連絡くれないかな...？",
         "display_url": "https://secret-talk-room.net/invite/m_jun_0830",
         "link_url": "http://localhost:3000/static-sites/scenario-famous_people/index.html",
         "threat_type": "malware",
